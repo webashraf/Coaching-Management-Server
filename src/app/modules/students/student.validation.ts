@@ -19,7 +19,7 @@ const studentsNameValidationSchema = z.object({
 });
 
 // Define schema for guardian
-const guardianSchema = z.object({
+const guardianValidationSchema = z.object({
   name: z.string().min(1),
   occupation: z.string().min(1),
   contactNumber: z.string().min(1),
@@ -27,23 +27,27 @@ const guardianSchema = z.object({
 });
 
 // Define schema for student
-const studentsValidationSchema = z.object({
-  id: z.string().min(1),
-  name: studentsNameValidationSchema,
-  gender: z.enum(["male", "female"]),
-  dateOfBirth: z.string().optional(),
-  email: z.string().email(),
-  age: z.number(),
-  contactNumber: z.string(),
-  emergencyContctNo: z.string(),
-  bloodGroup: z
-    .enum(["A+", "A-", "AB+", "AB-", "O+", "O-", "B+", "B-"])
-    .optional(),
-  prasentAddress: z.string(),
-  parmanentAddress: z.string(),
-  guardian: guardianSchema,
-  profileImage: z.string().optional(),
-  isActive: z.enum(["active", "disabled"]),
+const createStudentsValidationSchema = z.object({
+  body: z.object({
+    password: z.string().min(6),
+    student: z.object({
+      name: studentsNameValidationSchema,
+      gender: z.enum(["male", "female"]),
+      dateOfBirth: z.date().optional(),
+      email: z.string().email(),
+      age: z.number(),
+      contactNumber: z.string(),
+      emergencyContctNo: z.string(),
+      bloodGroup: z
+        .enum(["A+", "A-", "AB+", "AB-", "O+", "O-", "B+", "B-"])
+        .optional(),
+      prasentAddress: z.string(),
+      parmanentAddress: z.string(),
+      guardian: guardianValidationSchema,
+      profileImage: z.string().optional(),
+      isActive: z.enum(["active", "disabled"]),
+    }),
+  }),
 });
 
-export default studentsValidationSchema;
+export default createStudentsValidationSchema;

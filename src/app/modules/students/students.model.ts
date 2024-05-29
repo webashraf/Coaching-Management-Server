@@ -47,17 +47,17 @@ const guardianSchema = new Schema<Guardian>({
 
 // Define schema for student
 const studentSchema = new Schema<Students>({
-  id: {
-    type: "string",
-    required: [true, "Student ID is required"],
-    unique: true,
+  user: {
+    type: Schema.Types.ObjectId,
+    required: [true, "User ID is required"],
+    ref: "UserModel"
   },
   name: {
     type: studentsNameSchema,
     required: [true, "Student name is required"],
   },
   gender: ["male", "female"],
-  dateOfBirth: { type: "string" },
+  dateOfBirth: { type: Date },
   email: {
     type: "string",
     required: [true, "Student email is required"],
@@ -94,12 +94,10 @@ const studentSchema = new Schema<Students>({
     required: [true, "Guardian information is required"],
   },
   profileImage: { type: String },
-  isActive: {
-    type: String,
-    enum: ["active", "disabled"],
-    default: "active",
-    required: [true, "Student status is required"],
-  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 // Model
