@@ -1,27 +1,6 @@
 import { Schema, model } from "mongoose";
-import {
-  TAcademicSemister,
-  TCodes,
-  TMonths,
-  TNames,
-} from "./academicSemister.interface";
-
-const AcademicNames: TNames[] = ["Autum", "Summar", "Fall"];
-const AcademicCodes: TCodes[] = ["01", "02", "03"];
-const AcademicMonths: TMonths[] = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
-];
+import { AcademicCodes, AcademicMonths, AcademicNames } from "./academicSemister.constant";
+import { TAcademicSemister } from "./academicSemister.interface";
 
 const academicSemisterSchema = new Schema<TAcademicSemister>({
   name: {
@@ -35,7 +14,7 @@ const academicSemisterSchema = new Schema<TAcademicSemister>({
     required: true,
   },
   year: {
-    type: Date,
+    type: String,
     required: true,
   },
   startMonth: {
@@ -45,10 +24,21 @@ const academicSemisterSchema = new Schema<TAcademicSemister>({
   },
   endMonth: {
     type: String,
-    enum: academicMonths,
+    enum: AcademicMonths,
     required: true,
   },
 });
+
+academicSemisterSchema.pre('save', async function(next){
+  const isSemisterExist = await AcademicSemisterModel.findOne({
+    year: this.year,
+    name: this.name
+  })
+  if(isSemisterExist){
+    throw new Error("Semister is allready exist!!")
+  }
+  next();
+})
 
 export const AcademicSemisterModel = model<TAcademicSemister>(
   "AcademicSemister",

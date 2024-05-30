@@ -14,9 +14,10 @@ export type userName = {
 };
 
 export interface Students {
+  id: string;
   user: Types.ObjectId;
   name: userName;
-  gender: "male" | "female";
+  gender: "Male" | "Female" | "Other";
   dateOfBirth?: Date;
   email: string;
   age: number;

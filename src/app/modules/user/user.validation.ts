@@ -7,6 +7,7 @@ const createUserValidationSchema = z.object({
     })
     .max(20, { message: "password cant be more than 20 characters" })
     .optional(),
+  // id: z.string(),
 });
 
 export const userValidation = {

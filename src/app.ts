@@ -1,23 +1,20 @@
-import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import { studentsRoute } from "./app/modules/students/students.routes";
-import { userRoute } from "./app/modules/user/user.routes";
-import { glovalError } from "./app/middleware/glovalErrorHandler";
+import express, { Application, Request, Response } from "express";
+import router from "./app/routes";
+import globalErrorHandler from "./app/middleware/glovalErrorHandler";
 const app: Application = express();
 
 // Parser
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/v1/students", studentsRoute);
-app.use("/api/v1/user", userRoute);
+app.use("/api/v1/", router);
 
-const getAController = (req: Request, res: Response) => {
+const test = (req: Request, res: Response) => {
   res.send("Server is reunning");
 };
 
-app.get("/", getAController);
+app.get("/", test);
 
-
-app.use(glovalError);
+app.use(globalErrorHandler);
 export default app;

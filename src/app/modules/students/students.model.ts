@@ -47,6 +47,10 @@ const guardianSchema = new Schema<Guardian>({
 
 // Define schema for student
 const studentSchema = new Schema<Students>({
+  id: {
+    type: String,
+    required: [true, "Student id is required"],
+  },
   user: {
     type: Schema.Types.ObjectId,
     required: [true, "User ID is required"],
@@ -56,7 +60,10 @@ const studentSchema = new Schema<Students>({
     type: studentsNameSchema,
     required: [true, "Student name is required"],
   },
-  gender: ["male", "female"],
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Other"],
+  },
   dateOfBirth: { type: Date },
   email: {
     type: "string",
