@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
-import { Guardian, Students, userName } from "./students.interface";
 import validator from "validator";
+import { TGuardian, TStudents, TUserName } from "./students.interface";
 
 // Define schema for student's name
-const studentsNameSchema = new Schema<userName>({
+const studentsNameSchema = new Schema<TUserName>({
   firstName: {
     type: "string",
     required: [true, "First name is required"],
@@ -32,7 +32,7 @@ const studentsNameSchema = new Schema<userName>({
 });
 
 // Define schema for guardian
-const guardianSchema = new Schema<Guardian>({
+const guardianSchema = new Schema<TGuardian>({
   name: { type: "string", required: [true, "Guardian name is required"] },
   occupation: {
     type: "string",
@@ -46,7 +46,7 @@ const guardianSchema = new Schema<Guardian>({
 });
 
 // Define schema for student
-const studentSchema = new Schema<Students>({
+const studentSchema = new Schema<TStudents>({
   id: {
     type: String,
     required: [true, "Student id is required"],
@@ -54,7 +54,7 @@ const studentSchema = new Schema<Students>({
   user: {
     type: Schema.Types.ObjectId,
     required: [true, "User ID is required"],
-    ref: "UserModel"
+    ref: "UserModel",
   },
   name: {
     type: studentsNameSchema,
@@ -101,11 +101,16 @@ const studentSchema = new Schema<Students>({
     required: [true, "Guardian information is required"],
   },
   profileImage: { type: String },
+  admissionSemister: {
+    type: Schema.Types.ObjectId,
+    ref: "AcademicSemisterModel",
+    required: [true, "Admission semister` is required"],
+  },
   isDeleted: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 
 // Model
-export const StudentModel = model<Students>("Student", studentSchema);
+export const StudentModel = model<TStudents>("Student", studentSchema);

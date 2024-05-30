@@ -10,5 +10,12 @@ router.post(
   validateRequest(academicSemisterValidators.academicSemisterValidation),
   academicSemisterConstroller.createAcademicSemister
 );
+router.get("/", academicSemisterConstroller.retriveSemisters);
+router.get("/:semesterld", academicSemisterConstroller.retriveSemisters);
+router.patch(
+  "/:semesterld",
+  validateRequest(academicSemisterValidators.academicSemisterValidation),
+  academicSemisterConstroller.updateSingleSemister
+);
 
 export const academicSemisterRoute = router;

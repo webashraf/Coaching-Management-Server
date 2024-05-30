@@ -46,6 +46,7 @@ const createStudentsValidationSchema = z.object({
       parmanentAddress: z.string(),
       guardian: guardianValidationSchema,
       profileImage: z.string().optional(),
+      admissionSemister: z.string(),
       isActive: z.enum(["active", "disabled"]),
     }),
   }),
