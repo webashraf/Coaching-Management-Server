@@ -50,6 +50,7 @@ const studentSchema = new Schema<TStudents>({
   id: {
     type: String,
     required: [true, "Student id is required"],
+    unique: true,
   },
   user: {
     type: Schema.Types.ObjectId,
