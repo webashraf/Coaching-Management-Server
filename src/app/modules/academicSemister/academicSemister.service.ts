@@ -18,9 +18,10 @@ const updateSingleSemisterIntoDB = async (
   payload.code &&
   academicSemisterNameCodeMapper[payload.name] !== payload.code
     ? Promise.reject(new Error(`Invalid semister`))
-    : await AcademicSemisterModel.findByIdAndUpdate({ _id: id }, payload);
+    : await AcademicSemisterModel.findByIdAndUpdate({ _id: id }, payload, {
+        new: true,
+      });
 
-    
 export const academicSemisterService = {
   createAcademicSemisterIntoDB,
   retriveSemistersFromDB,

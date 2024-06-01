@@ -30,4 +30,5 @@ export interface TStudents {
   profileImage?: string;
   admissionSemister: Types.ObjectId;
   isDeleted?: boolean;
+  academicDepartment: Types.ObjectId;
 }

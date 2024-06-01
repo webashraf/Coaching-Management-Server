@@ -47,9 +47,66 @@ const createStudentsValidationSchema = z.object({
       guardian: guardianValidationSchema,
       profileImage: z.string().optional(),
       admissionSemister: z.string(),
-      isActive: z.enum(["active", "disabled"]),
+      academicDepartment: z.string().optional(),
     }),
   }),
 });
 
-export default createStudentsValidationSchema;
+const studentsNameValidationSchemaForUpdate = z.object({
+  firstName: z
+    .string()
+    .min(1)
+    .max(20)
+    .regex(/^[A-Z][a-zA-Z]*$/, {
+      message:
+        "First name must start with a capital letter and contain only letters",
+    })
+    .optional(),
+  middleName: z.string().optional(),
+  lastName: z
+    .string()
+    .min(1)
+    .max(20)
+    .regex(/^[a-zA-Z]+$/, { message: "Last name must contain only letters" })
+    .optional(),
+});
+
+// Define schema for guardian
+const guardianValidationSchemaForUpdate = z.object({
+  name: z.string().min(1).optional(),
+  occupation: z.string().min(1).optional(),
+  contactNumber: z.string().min(1).optional(),
+  email: z.string().email().optional(),
+});
+
+// Define schema for student
+const updateStudentsValidationSchema = z.object({
+  body: z.object({
+    student: z
+      .object({
+        id: z.string(),
+        name: studentsNameValidationSchemaForUpdate.optional(),
+        gender: z.enum(["Male", "Female"]).optional(),
+        dateOfBirth: z.date().optional(),
+        email: z.string().email().optional(),
+        age: z.number().optional(),
+        contactNumber: z.string().optional(),
+        emergencyContctNo: z.string().optional(),
+        bloodGroup: z
+          .enum(["A+", "A-", "AB+", "AB-", "O+", "O-", "B+", "B-"])
+          .optional(),
+        prasentAddress: z.string().optional(),
+        parmanentAddress: z.string().optional(),
+        guardian: guardianValidationSchemaForUpdate.optional(),
+        profileImage: z.string().optional(),
+        admissionSemister: z.string().optional(),
+        academicDepartment: z.string().optional(),
+      })
+      .optional(),
+  }),
+});
+
+export const studentsValidator = {
+  createStudentsValidationSchema,
+  updateStudentsValidationSchema,
+};
