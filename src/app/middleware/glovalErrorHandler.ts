@@ -1,11 +1,63 @@
-import { NextFunction, Request, Response } from "express";
+import { ErrorRequestHandler } from "express";
+import { ZodError } from "zod";
+import config from "../config";
+import AppError from "../error/appError";
+import handleCastError from "../error/handleCastError";
+import handleMongoseValidationError from "../error/handleMongoseValidationError";
+import handleZodError from "../error/handleZodError";
+import { TErrorSource } from "../interface/error";
 
-const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
+const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  let statusCode = 500;
+  let message = "Something went wrong!";
 
-  return res.status(500).json({
+  let errorSources: TErrorSource = [
+    {
+      path: "",
+      message: "Something went wrong!",
+    },
+  ];
+
+  if (err instanceof ZodError) {
+    const simplifiedError = handleZodError(err);
+    statusCode = simplifiedError?.statusCode;
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources;
+  } else if (err.name === "ValidationError") {
+    statusCode = handleMongoseValidationError(err).statusCode;
+    message = handleMongoseValidationError(err).message;
+    errorSources = handleMongoseValidationError(err).errorSources;
+    console.log("Ami mongose er validation error!!");
+  } else if (err.name === "CastError") {
+    statusCode = handleCastError(err).statusCode;
+    message = handleCastError(err).message;
+    errorSources = handleCastError(err).errorSources;
+  } else if (err instanceof AppError) {
+    statusCode = err?.statusCode;
+    message = err?.message;
+    errorSources = [
+      {
+        path: "",
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof Error) {
+    statusCode;
+    message = err?.message;
+    errorSources = [
+      {
+        path: "",
+        message: err?.message,
+      },
+    ];
+  }
+
+  return res.status(statusCode).json({
     success: false,
-    message: err.message || "Something went wrong!",
-    error: err,
+    message,
+    errorSource: errorSources,
+    // err: err.name,
+    stack: config.NODE_ENV === "development" ? err?.stack : null,
   });
 };
 

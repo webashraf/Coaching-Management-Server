@@ -2,7 +2,9 @@ import catchAsync from "../../utils/catchAsync";
 import { studentsService } from "./students.service";
 
 const getAllStudents = catchAsync(async (req, res) => {
-  const result = await studentsService.getAllStudentsFromDB();
+  const query = req?.query;
+  // console.log(query);
+  const result = await studentsService.getAllStudentsFromDB(query);
   res.status(200).json({
     success: true,
     message: "Data is successfully retrieved",
@@ -32,7 +34,7 @@ const deleteSingleStudent = catchAsync(async (req, res) => {
   });
 });
 const updateSingleStudent = catchAsync(async (req, res) => {
-  console.log("Hello from the controller" ,req.params.studentId, req.body);
+  // console.log("Hello from the controller", req.params.studentId, req.body);
   const result = await studentsService.updateSingleStudentFromDB(
     req.params.studentId,
     req.body
