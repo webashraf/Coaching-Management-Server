@@ -1,10 +1,10 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import validator from "validator";
 import { UserModel } from "../user/user.model";
 import { TGuardian, TStudents, TUserName } from "./students.interface";
 
 // Define schema for student's name
-const studentsNameSchema = new Schema<TUserName>({
+const studentsNameSchema = new mongoose.Schema<TUserName>({
   firstName: {
     type: "string",
     required: [true, "First name is required"],
@@ -33,7 +33,7 @@ const studentsNameSchema = new Schema<TUserName>({
 });
 
 // Define schema for guardian
-const guardianSchema = new Schema<TGuardian>({
+const guardianSchema = new mongoose.Schema<TGuardian>({
   name: { type: "string", required: [true, "Guardian name is required"] },
   occupation: {
     type: "string",
@@ -47,7 +47,7 @@ const guardianSchema = new Schema<TGuardian>({
 });
 
 // Define schema for student
-const studentSchema = new Schema<TStudents>(
+const studentSchema = new mongoose.Schema<TStudents>(
   {
     id: {
       type: String,
@@ -106,7 +106,7 @@ const studentSchema = new Schema<TStudents>(
     profileImage: { type: String },
     admissionSemister: {
       type: Schema.Types.ObjectId,
-      ref: "AcademicSemisterModel",
+      ref: "AcademicSemister",
       required: [true, "Admission semister` is required"],
     },
     isDeleted: {
@@ -115,7 +115,7 @@ const studentSchema = new Schema<TStudents>(
     },
     academicDepartment: {
       type: Schema.Types.ObjectId,
-      ref: "AcademicDepertmantModel",
+      ref: "academicDepertmant",
     },
   },
   {
@@ -132,11 +132,11 @@ studentSchema.pre("aggregate", function (next) {
 });
 
 studentSchema.pre("find", async function (next) {
-  this.find({isDeleted: { $ne: true}})
-})
+  this.find({ isDeleted: { $ne: true } });
+});
 studentSchema.pre("findOne", async function (next) {
-  this.find({isDeleted: { $ne: true}})
-})
+  this.find({ isDeleted: { $ne: true } });
+});
 
 studentSchema.pre("findOneAndUpdate", async function (next) {
   const query = this.getQuery();
@@ -148,7 +148,5 @@ studentSchema.pre("findOneAndUpdate", async function (next) {
   throw new Error("Student/User not found!!");
 });
 
-
-
 // Model
-export const StudentModel = model<TStudents>("Student", studentSchema);
+export const StudentModel = mongoose.model<TStudents>("Student", studentSchema);

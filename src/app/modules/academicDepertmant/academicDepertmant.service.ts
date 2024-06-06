@@ -4,10 +4,11 @@ import { AcademicDepertmantModel } from "./academicDepertmant.model";
 const createAcademicDepartmentIntoDB = async (payload: TAcademicDepertmant) =>
   await AcademicDepertmantModel.create(payload);
 
-const getAllDepartmentFromDB = async () => await AcademicDepertmantModel.find();
+const getAllDepartmentFromDB = async () =>
+  await AcademicDepertmantModel.find();
 
 const getSignleDepartmentByID = async (id: string) =>
-  await AcademicDepertmantModel.findById(id);
+  await AcademicDepertmantModel.findById(id).populate("academicFaculty");
 
 const updateSignleDepartmentByID = async (
   id: string,

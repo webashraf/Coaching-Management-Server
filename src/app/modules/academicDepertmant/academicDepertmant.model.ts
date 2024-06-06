@@ -9,7 +9,7 @@ const academicDepertmantSchema = new Schema<TAcademicDepertmant>(
     },
     academicFaculty: {
       type: Schema.Types.ObjectId,
-      ref: "AcademicFacultyModel",
+      ref: "AcademicFaculty",
     },
   },
   { timestamps: true }
