@@ -1,8 +1,11 @@
 import express from "express";
+import { AuthRoutes } from "../modules/Auth/auth.routes";
 import { academicDepartmentRoutes } from "../modules/academicDepertmant/academicDepertmant.routes";
 import { academicFacultyRoutes } from "../modules/academicFaculty/academicFaculty.routes";
 import { academicSemisterRoute } from "../modules/academicSemister/academicSemister.routes";
+import { courseRoute } from "../modules/course/course.routes";
 import { FacultyRoutes } from "../modules/faculty/faculty.routes";
+import { semisterRagistrationRoute } from "../modules/semisterRagistration/semisterRagistration.routes";
 import { studentsRoute } from "../modules/students/students.routes";
 import { userRoute } from "../modules/user/user.routes";
 
@@ -32,6 +35,18 @@ const moduleRoutes = [
   {
     path: "/academic-departments",
     route: academicDepartmentRoutes,
+  },
+  {
+    path: "/courses",
+    route: courseRoute,
+  },
+  {
+    path: "/semister-ragistration",
+    route: semisterRagistrationRoute,
+  },
+  {
+    path: "/auth",
+    route: AuthRoutes,
   },
 ];
 
