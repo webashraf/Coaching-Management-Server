@@ -1,5 +1,7 @@
 import express from "express";
+import auth from "../../middleware/auth";
 import validateRequest from "../../middleware/validateRequest";
+import { USER_ROLE } from "../user/user.const";
 import { academicSemisterConstroller } from "./academicSemister.controller";
 import { academicSemisterValidators } from "./academicSemister.validation";
 
@@ -10,7 +12,11 @@ router.post(
   validateRequest(academicSemisterValidators.academicSemisterValidation),
   academicSemisterConstroller.createAcademicSemister
 );
-router.get("/", academicSemisterConstroller.retriveSemisters);
+router.get(
+  "/",
+  auth(USER_ROLE.admin),
+  academicSemisterConstroller.retriveSemisters
+);
 router.get("/:semesterld", academicSemisterConstroller.retriveSemisters);
 router.patch(
   "/:semesterld",
