@@ -17,7 +17,7 @@ const createAcademicSemister = catchAsync(
 
 const retriveSemisters = catchAsync(async (req: Request, res: Response) => {
   const semisterId = req.params.semesterld || null;
-  console.log(semisterId);
+
   const result =
     await academicSemisterService.retriveSemistersFromDB(semisterId);
   res.status(200).json({

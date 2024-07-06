@@ -2,7 +2,6 @@ import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app";
 import config from "./app/config";
-// main().catch(err => console.log(err));
 let server: Server;
 async function main() {
   try {

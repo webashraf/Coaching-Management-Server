@@ -30,6 +30,9 @@ const changePassword = catchAsync(async (req, res) => {
 
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
+  // console.log(refreshToken, req.cookies);
+
+  // console.log(refreshToken);
   const result = await AuthServices.refreshToken(refreshToken);
 
   res.status(200).json({

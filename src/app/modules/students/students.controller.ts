@@ -3,7 +3,7 @@ import { studentsService } from "./students.service";
 
 const getAllStudents = catchAsync(async (req, res) => {
   const query = req?.query;
-  // console.log(query);
+
   const result = await studentsService.getAllStudentsFromDB(query);
   res.status(200).json({
     success: true,
@@ -34,7 +34,6 @@ const deleteSingleStudent = catchAsync(async (req, res) => {
   });
 });
 const updateSingleStudent = catchAsync(async (req, res) => {
-  // console.log("Hello from the controller", req.params.studentId, req.body);
   const result = await studentsService.updateSingleStudentFromDB(
     req.params.id,
     req.body

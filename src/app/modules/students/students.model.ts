@@ -126,8 +126,7 @@ const studentSchema = new mongoose.Schema<TStudents>(
 );
 
 studentSchema.pre("aggregate", function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-  console.log("pipeline", this.pipeline);
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
   next();
 });
 
