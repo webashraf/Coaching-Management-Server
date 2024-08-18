@@ -27,7 +27,6 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     statusCode = handleMongoseValidationError(err).statusCode;
     message = handleMongoseValidationError(err).message;
     errorSources = handleMongoseValidationError(err).errorSources;
-    console.log("Ami mongose er validation error!!");
   } else if (err.name === "CastError") {
     statusCode = handleCastError(err).statusCode;
     message = handleCastError(err).message;

@@ -14,14 +14,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
     }
-    // console.log(config.jwt_access_expires_in)
-    // console.log(
-    //   requiredRoles,
-    //   "Token",
-    //   token,
-    //   "Secret================================================================",
-    //   config.jwt_access_secret
-    // );
+    
 
     // checking if the given token is valid
     let decoded;
@@ -31,13 +24,11 @@ const auth = (...requiredRoles: TUserRole[]) => {
         config.jwt_access_secret as string
       ) as JwtPayload;
     } catch (err) {
-      // console.log(err);
       throw new AppError(
         httpStatus.UNAUTHORIZED,
         "Unauthorized for this user!!!"
       );
     }
-    // console.log("Check", { decoded });
 
     const { role, userId, iat } = decoded;
 

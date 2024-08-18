@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from "http-status";
 import mongoose from "mongoose";
 import config from "../../config";
@@ -24,7 +25,7 @@ const createStudentIntoDB = async (password: string, payload: TStudents) => {
   userData.password = password || (config.default_pass as string);
   userData.role = "student";
   const admissionSemister = await AcademicSemisterModel.findById(
-    payload.admissionSemister
+    payload.admissionSemester
   );
 
   const session = await mongoose.startSession();
@@ -163,5 +164,5 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 export const userService = {
   createStudentIntoDB,
   createFacultyIntoDB,
-  createAdminIntoDB
+  createAdminIntoDB,
 };

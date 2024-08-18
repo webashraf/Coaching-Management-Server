@@ -1,5 +1,9 @@
 import { Schema, model } from "mongoose";
-import { AcademicCodes, AcademicMonths, AcademicNames } from "./academicSemister.constant";
+import {
+  AcademicCodes,
+  AcademicMonths,
+  AcademicNames,
+} from "./academicSemister.constant";
 import { TAcademicSemister } from "./academicSemister.interface";
 
 const academicSemisterSchema = new Schema<TAcademicSemister>({
@@ -29,16 +33,16 @@ const academicSemisterSchema = new Schema<TAcademicSemister>({
   },
 });
 
-academicSemisterSchema.pre('save', async function(next){
+academicSemisterSchema.pre("save", async function (next) {
   const isSemisterExist = await AcademicSemisterModel.findOne({
     year: this.year,
-    name: this.name
-  })
-  if(isSemisterExist){
-    throw new Error("Semister is allready exist!!")
+    name: this.name,
+  });
+  if (isSemisterExist) {
+    throw new Error("Semister is allready exist!!");
   }
   next();
-})
+});
 
 export const AcademicSemisterModel = model<TAcademicSemister>(
   "AcademicSemister",

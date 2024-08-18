@@ -8,7 +8,6 @@ const userSchema = new Schema<TUser, UserStaticModel>(
     id: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,

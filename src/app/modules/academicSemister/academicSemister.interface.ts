@@ -1,18 +1,18 @@
-export type TNames = "Autum" | "Summar" | "Fall";
+export type TNames = "Autumn" | "Summer" | "Fall";
 export type TCodes = "01" | "02" | "03";
 export type TMonths =
-  | "january"
-  | "february"
-  | "march"
-  | "april"
-  | "may"
-  | "june"
-  | "july"
-  | "august"
-  | "september"
-  | "october"
-  | "november"
-  | "december";
+  | "January"
+  | "February"
+  | "March"
+  | "April"
+  | "May"
+  | "June"
+  | "July"
+  | "August"
+  | "September"
+  | "October"
+  | "November"
+  | "December";
 
 export type TAcademicSemister = {
   name: TNames;

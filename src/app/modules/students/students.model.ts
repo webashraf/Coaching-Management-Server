@@ -83,7 +83,7 @@ const studentSchema = new mongoose.Schema<TStudents>(
       type: "string",
       required: [true, "Student contact number is required"],
     },
-    emergencyContctNo: {
+    emergencyContactNo: {
       type: "string",
       required: [true, "Emergency contact number is required"],
     },
@@ -91,11 +91,11 @@ const studentSchema = new mongoose.Schema<TStudents>(
       type: String,
       enum: ["A+", "A-", "AB+", "AB-", "O+", "O-", "B+", "B-"],
     },
-    prasentAddress: {
+    presentAddress: {
       type: String,
       required: [true, "Present address is required"],
     },
-    parmanentAddress: {
+    permanentAddress: {
       type: String,
       required: [true, "Permanent address is required"],
     },
@@ -104,7 +104,7 @@ const studentSchema = new mongoose.Schema<TStudents>(
       required: [true, "Guardian information is required"],
     },
     profileImage: { type: String },
-    admissionSemister: {
+    admissionSemester: {
       type: Schema.Types.ObjectId,
       ref: "AcademicSemister",
       required: [true, "Admission semister` is required"],
@@ -125,8 +125,18 @@ const studentSchema = new mongoose.Schema<TStudents>(
   }
 );
 
+studentSchema.virtual("fullName").get(function () {
+  return (
+    this?.name?.firstName +
+    " " +
+    this?.name?.middleName +
+    " " +
+    this?.name?.lastName
+  );
+});
+
 studentSchema.pre("aggregate", function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
 

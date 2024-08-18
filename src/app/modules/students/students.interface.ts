@@ -22,13 +22,13 @@ export interface TStudents {
   email: string;
   age: number;
   contactNumber: string;
-  emergencyContctNo: string;
+  emergencyContactNo: string;
   bloodGroup?: "A+" | "A-" | "AB+" | "AB-" | "O+" | "O-" | "B+" | "B-";
-  prasentAddress: string;
-  parmanentAddress: string;
+  presentAddress: string;
+  permanentAddress: string;
   guardian: TGuardian;
   profileImage?: string;
-  admissionSemister: Types.ObjectId;
+  admissionSemester: Types.ObjectId;
   isDeleted?: boolean;
   academicDepartment: Types.ObjectId;
 }

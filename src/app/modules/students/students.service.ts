@@ -10,7 +10,7 @@ import { StudentModel } from "./students.model";
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   const studentQuery = new QueryBuilder(
     StudentModel.find()
-      .populate("admissionSemister")
+      .populate("admissionSemester")
       .populate({
         path: "academicDepartment",
         populate: {
@@ -79,7 +79,7 @@ const updateSingleStudentFromDB = async (
 ) => {
   try {
     const { name, guardian, ...remainingStudentData } = payload;
-    let modifiedData: Record<string, unknown> = {
+    const modifiedData: Record<string, unknown> = {
       ...remainingStudentData,
     };
 
